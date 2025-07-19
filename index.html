@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Submit Report / Feedback</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #0f0f0f;
+      font-family: sans-serif;
+      color: #e0e0e0;
+      padding: 3rem 1rem;
+    }
+
+    main {
+      max-width: 720px;
+      margin: auto;
+      background: #181818;
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #cccccc;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      display: block;
+      cursor: pointer;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background: #222;
+      color: #fff;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: none;
+      overflow-y: hidden;
+      transition: height 0.2s ease;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      opacity: 0;
+      position: absolute;
+      height: 1.5rem;
+      width: 1.5rem;
+      z-index: 2;
+      cursor: pointer;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .checkbox-custom {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      background: #222;
+      border: 2px solid #4da6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s ease;
+      position: relative;
+      flex-shrink: 0;
+      box-sizing: border-box;
+    }
+
+    .checkbox-group input[type="checkbox"]:checked + .checkbox-custom {
+      background: #4da6ff;
+      box-shadow: 0 0 6px #4da6ff;
+    }
+
+    .checkbox-group input[type="checkbox"]:checked + .checkbox-custom::after {
+      content: "";
+      width: 6px;
+      height: 10px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      position: absolute;
+      left: 40%;
+      top: 23%;
+      box-sizing: content-box;
+    }
+
+    .checkbox-group label {
+      flex: 1;
+      margin-left: 0.5rem;
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    #identity {
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    #identity.hidden {
+      max-height: 0;
+      opacity: 0;
+      pointer-events: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .field-block {
+      margin-bottom: 1rem;
+    }
+
+    #anon-msg {
+      color: #888;
+      font-size: 0.9rem;
+      margin-top: -0.6rem;
+      margin-left: 2rem;
+      display: none;
+    }
+
+    button {
+      background: #4da6ff;
+      color: #fff;
+      padding: 0.9rem 2rem;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover {
+      background: #66b7ff;
+      box-shadow: 0 0 10px #4da6ff;
+    }
+
+    .field-block + .field-block {
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Submit Report / Feedback</h1>
+    <form action="https://formspree.io/f/mwpqvkey" method="POST" onsubmit="prepareSubmit(event)">
+      
+      <div class="checkbox-group">
+        <input type="checkbox" id="anon" onchange="toggleAnon(this)">
+        <span class="checkbox-custom"></span>
+        <label for="anon">Send Anonymously</label>
+      </div>
+      <div id="anon-msg">We won’t / can't contact you</div>
+
+      <div id="identity">
+        <div class="field-block">
+          <label for="name">Your Name</label>
+          <input type="text" name="name" id="name">
+        </div>
+
+        <div class="field-block">
+          <label for="email">Your Email</label>
+          <input type="email" name="email" id="email">
+        </div>
+      </div>
+
+      <label for="product">Product</label>
+      <select name="product" id="product">
+        <option selected>Cool New Tab</option>
+      </select>
+ <label for="screenshot">Provide a Screenshot <br>
+  <br><p style="color: #969696;"> please upload the image to sites like <a href="https://imgur.com/upload" target="_blank" style="color: #80bcf9;">imgur.com</a> / <a href="https://imgbb.com/" target="_blank" style="color: #80bcf9;">imgbb.com</a></p></label>
+      <input type="url" name="screenshot" id="screenshot" placeholder="https://imgur.com/example.jpg  | give us a screenshot of your issue or leave it empty"/>
+
+      <label for="message">Report or Feedback</label>
+      <textarea name="message" id="message" required placeholder="Tell us what happend or what you like about it ❣️✨..."></textarea>
+
+     
+      <div class="checkbox-group">
+        <input type="checkbox" id="includeUA" checked>
+        <span class="checkbox-custom"></span>
+        <label for="includeUA">Include my browser name and screen-size (helps us fix bugs)</label>
+      </div>
+
+      <input type="hidden" name="extras" id="extras" value="">
+      <input type="hidden" name="anonymous" id="anonymous" value="false">
+
+      <button type="submit">Send Report</button>
+    </form>
+  </main>
+
+  <script>
+    function toggleAnon(cb) {
+      const identity = document.getElementById("identity");
+      const msg = document.getElementById("anon-msg");
+      const hide = cb.checked;
+      identity.classList.toggle("hidden", hide);
+      msg.style.display = hide ? 'block' : 'none';
+    }
+
+    const textarea = document.getElementById('message');
+    function adjustHeight(el) {
+      el.style.height = 'auto'; 
+      el.style.height = el.scrollHeight + 'px';
+    }
+
+    textarea.addEventListener('input', () => {
+      adjustHeight(textarea);
+    });
+
+    window.addEventListener('load', () => adjustHeight(textarea));
+
+    function prepareSubmit(e) {
+      const uaCheck = document.getElementById("includeUA");
+      const extras = document.getElementById("extras");
+      const msg = document.getElementById("message");
+      const anonCheck = document.getElementById("anon");
+      const anonInput = document.getElementById("anonymous");
+
+      if (msg.value.trim().length < 18) {
+        e.preventDefault();
+        alert("Please Tell us more about the issue or your feedback");
+        msg.focus();
+        return false;
+      }
+      anonInput.value = anonCheck.checked ? "true" : "false";
+
+      if (uaCheck.checked) {
+        extras.value = `Browser: ${navigator.userAgent}, Screen: ${screen.width}x${screen.height}`;
+      } else {
+        extras.value = '';
+      }
+    }
+  </script>
+</body>
+</html>
