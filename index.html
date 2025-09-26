@@ -263,7 +263,7 @@
       anonInput.value = anonCheck.checked ? "true" : "false";
 
       if (uaCheck.checked) {
-        extras.value = `Browser: ${navigator.userAgent}, Screen: ${screen.width}x${screen.height}`;
+        extras.value = `Browser: ${navigator.userAgent}, Screen: ${window.innerWidth}x${window.innerHeight}`;
       } else {
         extras.value = '';
       }
